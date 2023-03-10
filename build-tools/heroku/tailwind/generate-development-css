@@ -11,10 +11,16 @@ set -eu
 scriptdir=$(cd $(dirname $0) && pwd)
 cd $scriptdir
 
-echo "👉 Generating CSS with all features enabled. This file's goan' be big!" >&2
-
 staticdir=../../../static
 
-npx tailwindcss build -c $scriptdir/tailwind.full.js -i styles.css -o $staticdir/css/generated.css
-npx minify $staticdir/css/generated.css > $staticdir/css/generated.css.min
-mv $staticdir/css/generated.css{.min,}
+tailwindArgs="build -c $scriptdir/tailwind.full.js -i styles.css -o $staticdir/css/generated.css"
+
+if [[ "${1:-}" == "--watch" ]]; then
+    echo "👀 Running Tailwind CSS generation with all features enabled in watch mode. 👀"
+    npx tailwindcss --watch ${tailwindArgs}
+else
+    echo "👉 Generating CSS with all features enabled. This file's goan' be big!" >&2
+    npx tailwindcss ${tailwindArgs}
+    npx minify $staticdir/css/generated.css > $staticdir/css/generated.css.min
+    mv $staticdir/css/generated.css{.min,}
+fi

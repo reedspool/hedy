@@ -208,14 +208,21 @@ All the styling in our front-end HTML templates is done using the Tailwind libra
 This library has generated classes for styling which we can apply to HTML elements.
 To make sure you have access to all possible styling classes, generate the development CSS file:
 ```bash
-$ ./build-tools/heroku/tailwind/generate-development-css
+$ ./build-tools/heroku/tailwind/generate-development-css --watch
 ```
+The `--watch` parameter makes the command keep looking for changes and automatically updating the files.
+It's a good idea to keep it running while you are working on the front-end code.
+If you just want to run the code once, simply remove this parameter.
+
 When merging we want to keep the CSS file as small as possible for performance reasons.
 Tailwind has a built-in `purge` option to only generate CSS for classes that are actually being used.
-Please run the following command so Tailwind only generates used classes:
+To that end, before making a PR, please run the following command so only the Tailwind classes which are actually used are generated and committed:
 ```bash
 $ ./build-tools/heroku/tailwind/generate-css
 ```
+
+Note: Stop the `generate-development-css` process before you run `generate-css`, otherwise the development CSS may accidentally overwrite the production CSS.
+
 For all possible styling classes and more, take a look at their [website](https://tailwindcss.com).
 If you want to combine different Tailwind classes into one class or one element, we can do this in the `/build-tool/heroku/tailwind/styles.css` file.
 By using the `@apply` attribute we can assign classes to other styling. For example, we styled the `<h1>` element with multiple Tailwind classes like this:
