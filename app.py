@@ -37,7 +37,7 @@ from utils import dump_yaml_rt, is_debug_mode, load_yaml_rt, timems, version, st
 from website import (ab_proxying, achievements, admin, auth_pages, aws_helpers,
                      cdn, classes, database, for_teachers, jsonbin, parsons,
                      profile, programs, querylog, quiz, statistics,
-                     translating)
+                     translating, jinja2_include_file_raw)
 from website.auth import (current_user, is_admin, is_teacher,
                           login_user_from_token_cookie, requires_login, requires_teacher)
 from website.log_fetcher import log_fetcher
@@ -58,6 +58,7 @@ os.chdir(os.path.join(os.getcwd(), __file__.replace(
 
 # Setting up Flask and babel (web and translations)
 app = Flask(__name__, static_url_path='')
+app.jinja_env.add_extension(jinja2_include_file_raw.IncludeFileExtension)
 app.url_map.strict_slashes = False  # Ignore trailing slashes in URLs
 babel = Babel(app)
 
