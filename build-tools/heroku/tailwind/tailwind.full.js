@@ -1,14 +1,5 @@
 // Control the Tailwind file size by disabling stuff we don't need.
 module.exports = {
-  content: [
-      '../../../templates/**/*.html',
-      '../../../main/**/*.md',
-      '../../../content/**/*.md',
-      '../../../static/js/**/*.js',
-  ],
-  safelist: [
-    { pattern: /./ },
-  ],
   theme: {
     extend: {},
     fontSize: {
