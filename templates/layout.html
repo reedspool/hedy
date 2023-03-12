@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
     <link rel="stylesheet" href="{{static('/css/generated.css')}}">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript">
+     // Block scope in case there's another top-level var named `module` out there.
+     {
+       // `tailwind.config.js` assigns to `module.exports`. So make sure it can.
+       const module = {};
+
+       // Include the entire file literally into the HTML.
+       {% include_file_raw "../build-tools/heroku/tailwind/tailwind.config.js" %}
+
+       // But Play CDN needs it to be in `tailwind.config`
+       tailwind.config = module.exports;
+     }
+    </script>
+    <style type="text/tailwindcss">
+        {% include_file_raw '../build-tools/heroku/tailwind/styles.css' %}
+    </style>
     <link rel="stylesheet" href="{{static('/css/additional.css')}}">
     <link rel="icon" type="image/png" href="{{static('/images/Hedy-logo-96x96.png')}}"/>
     <link rel="stylesheet" href="{{static('/fontawesome/css/all.min.css')}}"/>
